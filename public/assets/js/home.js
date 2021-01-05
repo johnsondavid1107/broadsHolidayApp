@@ -7,19 +7,28 @@ $(document).ready(function () {
 
     saveIcon.on("click", function (event) {
         event.preventDefault();
-
-        console.log(person.val().trim());
         let personContent = person.val().trim();
-        let textAreaContent = person.val().trim();
+        let textAreaContent = textArea.val().trim();
         let newLiItem = $("<li>")
         newLiItem.addClass("list-group-item")
         newLiItem.html(personContent)
         $(".list-group").append(newLiItem)
 
+        $.ajax("/createNote", {
+            type: "POST",
+            data: {
+                person: personContent,
+                entry: textAreaContent
+            }
+
+        }).then(function (res) {
+            console.log('put successfull')
+            console.log(res)
+        })
+
 
 
         person.val("");
-        console.log(textArea.val().trim());
         textArea.val("");
 
 
