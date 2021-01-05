@@ -3,7 +3,7 @@ $(document).ready(function () {
     var person = $("#person");
     let saveIcon = $("#saveIcon")
     let textArea = $("#textArea")
-    let group = $(".list-group")
+    let liGroupItem = $(".list-group-item")
 
     $.ajax("/api/entries", {
         type: "GET"
@@ -15,7 +15,7 @@ $(document).ready(function () {
             let newLiItem = $("<li>")
             newLiItem.addClass("list-group-item")
             newLiItem.html(dataInfo)
-            newLiItem.attr("data", response.Entries[i].id)
+            newLiItem.attr("value", response.Entries[i].id)
             $(".list-group").append(newLiItem)
 
         }
@@ -45,7 +45,7 @@ $(document).ready(function () {
             let newLiItem = $("<li>")
             newLiItem.addClass("list-group-item")
             newLiItem.html(personContent)
-            newLiItem.attr("data", res.id)
+            newLiItem.attr("value", res.id)
             $(".list-group").append(newLiItem)
             location.reload();
         })
@@ -54,12 +54,27 @@ $(document).ready(function () {
 
         person.val("");
         textArea.val("");
-        console.log(group.length)
+
 
 
     })
 
+    $(".list-group").on("click", ".list-group-item", function (event) {
+        let id = $(event.target).text();
 
+        $.ajax("/api/PostEntries", {
+            type: "POST",
+            data: {
+                entry: id
+            }
+        }).then(function (response) {
+            console.log(response)
+
+            person.val(response.person)
+            textArea.val(response.entry)
+
+        })
+    })
 
 
 
