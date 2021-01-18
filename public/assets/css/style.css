@@ -26,7 +26,7 @@ height: 100px;
     width: 400px;
 }
 
-#saveIcon:hover,.fa-edit:hover,#try:hover{
+#saveIcon:hover,.fa-edit:hover,#try:hover,#updateIcon:hover{
     color: limegreen;
 
 }

@@ -3,7 +3,36 @@ $(document).ready(function () {
     var person = $("#person");
     let saveIcon = $("#saveIcon")
     let textArea = $("#textArea")
+    let clear = $("#clear")
     let liGroupItem = $(".list-group-item")
+    let update = $("#updateIcon")
+
+    clear.on("click", function () {
+        person.val("");
+        textArea.val("");
+    })
+
+    update.on("click", function () {
+        let id = person.attr("data-value")
+
+        $.ajax("/notes/" + id, {
+            type: "PUT",
+            data: {
+                person: person.val(),
+                entry: textArea.val()
+            }
+        }).then(function () {
+            console.log("success")
+
+
+        })
+
+
+    })
+
+
+
+
 
     $.ajax("/api/entries", {
         type: "GET"
@@ -23,8 +52,6 @@ $(document).ready(function () {
 
 
     })
-
-
     saveIcon.on("click", function (event) {
         event.preventDefault();
         let personContent = person.val().trim();
@@ -50,11 +77,8 @@ $(document).ready(function () {
             location.reload();
         })
 
-
-
         person.val("");
         textArea.val("");
-
 
 
     })
@@ -69,9 +93,10 @@ $(document).ready(function () {
             }
         }).then(function (response) {
             console.log(response)
-
             person.val(response.person)
+            person.attr("data-value", response.id)
             textArea.val(response.entry)
+
 
         })
     })

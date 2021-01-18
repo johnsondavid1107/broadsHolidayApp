@@ -19,16 +19,22 @@ module.exports = function (app) {
         })
 
     });
+
+    app.put("/test/:id", function (req, res) {
+        console.log(req.params.id)
+        res.send(400)
+
+    })
     //Tryng to figure out how to update an entry that isnt there yet by targetting where clause to null..Doesnt work
     //might need to add a second save button in the client js to record the req.params value to target the update function
-    app.put('/putInfo', function (req, res) {
+    app.put("/notes/:id", function (req, res) {
         db.Entry.update({
             person: req.body.person,
             entry: req.body.entry,
-            UserId: '1'
+            UserId: req.user.id
         }, {
             where: {
-                id: null
+                id: req.params.id
             }
         }
         ).then(function (response) {
@@ -42,7 +48,7 @@ module.exports = function (app) {
         db.Entry.create({
             person: req.body.person,
             entry: req.body.entry,
-            UserId: '1'
+            UserId: req.user.id
         }
         ).then(function (response) {
             res.send(response)
@@ -52,19 +58,6 @@ module.exports = function (app) {
 
     //------------------------------------------
 
-    app.get('/logUser', function (req, res) {
-        db.User.findOne({
-            where: { email: req.body.email }
-        }).then(function (emailUser) {
-            if (!emailUser)
-                console.log("no user found")
-
-            res.end();
-        })
-
-
-
-    })
 
     //Found on youtube, should find all users and their connected entries using include clause on line 72
     //Need to also change where id clause to req.user id or currently user logged in's ID
@@ -72,7 +65,7 @@ module.exports = function (app) {
     app.get('/api/entries', function (req, res) {
         db.User.findOne({
             include: [db.Entry],
-            where: { id: "1" }
+            where: { id: req.user.id }
 
         }).then(function (allUsers) {
             res.send(allUsers);

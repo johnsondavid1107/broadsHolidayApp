@@ -22,19 +22,19 @@
             <div class="large-2 medium-2 cell"></div>
             <div class="large-8 medium-8 cell">
                 <div class="success callout">
-                    <form action="#">
+                    <form action="POST">
 
                         <label class="text-center">First Name</label>
-                        <input type="text" placeholder="First Name Goes Here">
+                        <input type="text" placeholder="First Name Goes Here" id="firstName">
                         <label class="text-center">Last Name</label>
-                        <input type="text" placeholder="Last Name Goes Here">
+                        <input type="text" placeholder="Last Name Goes Here" id="lastName">
                         <label class="text-center">Email</label>
-                        <input type="text" placeholder="Email Goes Here">
+                        <input type="text" placeholder="Email Goes Here" id="email">
                         <label class="text-center">Password</label>
-                        <input type="text" placeholder="Password Goes Here">
+                        <input type="text" placeholder="Password Goes Here" id="password">
 
                     </form>
-                    <p class="text-center"><a href="/login" class="button">Submit</a></p>
+                    <p class="text-center"><a class="button" id="Submit" href="/login">Submit</a></p>
                 </div>
             </div>
             <div class="large-2 medium-2 cell"></div>
@@ -70,6 +70,8 @@
 
     <script src="assets/js/vendor.js"></script>
     <script src="assets/js/foundation.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./assets/js/register.js"></script>
 </body>
 
 </html>
